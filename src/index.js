@@ -111,6 +111,7 @@ L.Control.EasyPrint = L.Control.extend({
         if (this.options.hideClasses) {
             this._toggleClasses(this.options.hideClasses);
         }
+        this._toggleDelegate();
         var sizeMode = typeof event !== 'string' ? event.target.className : event;
         if (sizeMode === 'CurrentSize') {
             return this._printOpertion(sizeMode);
@@ -198,7 +199,7 @@ L.Control.EasyPrint = L.Control.extend({
                 }
                 plugin._toggleControls(true);
                 plugin._toggleClasses(plugin.options.hideClasses, true);
-
+                plugin._toggleDelegate(true);
                 if (plugin.outerContainer) {
                     if (plugin.originalState.widthWasAuto) {
                         plugin.mapContainer.style.width = 'auto'
@@ -433,7 +434,10 @@ L.Control.EasyPrint = L.Control.extend({
             div.style.display = 'none';
         });
     },
-
+    _toggleDelegate: function (show) {
+        if (typeof this.options.toggleDelegate === 'function')
+            this.options.toggleDelegate(show);
+    },
     _a4PageSize: {
         height: 715,
         width: 1045
